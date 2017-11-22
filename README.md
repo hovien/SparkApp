@@ -1,8 +1,8 @@
-#Twitter streaming with Spark
+# Twitter streaming with Spark
 
 The purpose of this project was to stream tweets and find the relevant ones to gather market intelligence. Spark has Twitter compatibility but only in the Scala API, so a workaround was needed to use it with Python. The TwythonReader.py file streames and forwards tweets to Spark Streaming. The code was based on this example: http://www.awesomestats.in/spark-twitter-stream/. The filtering is very simplistic at this point, a keyword search done by regular expressions. The tweets that have one of the keywords are output into a MySQL database.
 
-#Code example
+# Code example
 
 The following code receives the tweets from the socket and filters them by three different topics. Keywords are in two languages, German and English. Non-ASCII characters are included by their Unicode code, as in Öl -> \u0076l. The foreachRDD() function is used for outputting into the MySQL database. 
 
@@ -22,7 +22,7 @@ def write_oil_to_MySQL(json_in, jdbcUrl, connectionProperties):
     tweetsDF = spark.read.json(json_in)
     tweetsDF.write.jdbc(url=jdbcUrl, table="oil", properties=connectionProperties, mode="append")
 ```
-#Installation and use
+# Installation and use
 
 The scripts can be cloned from this repository.
 
@@ -32,6 +32,6 @@ The jdbc connector of MySQL has to be installed and the path to the jar files ha
 
 The application is dependent on a MySQL database where the output can be saved. This database needs to have corresponding tables for each topic that is filtered. 
 
-#Issues
+# Issues
 
 The connections are established with the database everytime a batch arrives instead of only when a write is needed, so it is very inefficient.  
